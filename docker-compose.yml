@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: 'postgres:15.2-alpine'
+    container_name: 'java-postgres'
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=poiiop5885'
+      - 'POSTGRES_DB=DockerExample'
+
+  app:
+    build: ./
+    container_name: 'java-app'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/DockerExample
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=poiiop5885
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
